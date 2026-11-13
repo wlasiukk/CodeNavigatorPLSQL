@@ -1,0 +1,112 @@
+{
+  "name": "code-navigator",
+  "displayName": "Code Navigator (PL/SQL)",
+  "description": "Ctrl+Click navigation for Oracle PL/SQL sources (packages, procedures, functions, types, tables...) indexed from workspace folders. Pluggable language adapters.",
+  "version": "0.1.0",
+  "publisher": "KrzysztofWlasiuk",
+  "icon": "images/icon.png",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "oracle-sql",
+        "aliases": [
+          "PL/SQL"
+        ],
+        "extensions": [
+          ".bdy",
+          ".spc",
+          ".pck",
+          ".prc",
+          ".fnc",
+          ".trg",
+          ".tps",
+          ".tpb",
+          ".typ"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "codeNav.rebuildIndex",
+        "title": "Code Navigator: Rebuild Index"
+      },
+      {
+        "command": "codeNav.goToDeclaration",
+        "title": "Code Navigator: Go to Package Declaration (spec)"
+      },
+      {
+        "command": "codeNav.generateCallGraph",
+        "title": "Code Navigator: Generate Call Graph (HTML)"
+      },
+      {
+        "command": "codeNav.goToDefinition",
+        "title": "Code Navigator: Go to Definition (body)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "codeNav.goToDeclaration",
+        "key": "ctrl+shift+f12",
+        "when": "editorTextFocus && codeNav.supportedFile"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "codeNav.goToDeclaration",
+          "when": "codeNav.supportedFile",
+          "group": "navigation@1.5"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Code Navigator",
+      "properties": {
+        "codeNav.exclude": {
+          "type": "string",
+          "default": "**/{node_modules,.git,.svn,out,dist,target}/**",
+          "scope": "resource",
+          "description": "Glob (relative to each workspace folder) of files/folders excluded from indexing. Can be set per folder in <folder>/.vscode/settings.json, also inside a .code-workspace. Reload window after changing."
+        },
+        "codeNav.shiftClickDeclaration": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ctrl+Shift+Click goes to the declaration (package spec) instead of the definition (body)."
+        },
+        "codeNav.hover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show signature (from the package spec) when hovering over a procedure/function/object name."
+        },
+        "codeNav.documentSymbols": {
+          "type": "boolean",
+          "default": true,
+          "description": "Provide Outline / breadcrumbs / Ctrl+Shift+O symbols."
+        },
+        "codeNav.maxFileSizeKB": {
+          "type": "number",
+          "default": 8192,
+          "description": "Files larger than this are not indexed."
+        },
+        "codeNav.plsql.include": {
+          "type": "string",
+          "default": "**/*.{bdy,spc,pks,pkb,pkh,pck,pls,plsql,sql,prc,fnc,trg,tps,tpb,typ,tab,vw,mvw,syn,seq}",
+          "scope": "resource",
+          "description": "Glob of PL/SQL files that are indexed and navigable."
+        }
+      }
+    }
+  }
+}

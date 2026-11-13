@@ -1,0 +1,23 @@
+# Files excluded from the packaged extension (vsce package / publish).
+# Shipped: package.json, extension.js, src/**, images/icon.png, README.md, LICENSE, CHANGELOG.md
+
+.vscode/**
+.vscode-test/**
+.git/**
+.gitignore
+.vscodeignore
+
+# development only
+test/**
+scripts/**
+src/languages/README.md
+
+# build outputs and sources of assets
+*.vsix
+images/icon.svg
+
+# misc
+node_modules/**
+**/*.map
+**/.DS_Store
+**/Thumbs.db
